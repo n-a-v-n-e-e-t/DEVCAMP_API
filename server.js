@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const bootcamps = require('./routes/bootcamps'); // route files
 const morgan  = require('morgan'); // logger
+const errorHandler = require('./middleware/error');
 const connectDb = require('./config/db');
 const colors = require('colors');
 
@@ -21,7 +22,7 @@ if(process.env.NODE_ENV == 'development'){
 app.use(express.json());
 // Mount routs
 app.use('/api/v1/bootcamps',bootcamps);
-
+app.use(errorHandler);
 const sever = app.listen(PORT,()=>{
     console.log(`server started at PORT ${PORT} in environmen ${process.env.NODE_ENV}`.green.bold);
 })
